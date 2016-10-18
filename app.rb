@@ -11,7 +11,7 @@ get '/' do
   fp.fijas_picas
   @fijas= fp.fijas
   @picas= fp.picas
-
+  @show = "hidden"
   erb :index
 end
 
@@ -24,9 +24,12 @@ post '/' do
   fp2.format_cookie_number(cookies[:number])####TODO
   fp2.format_user_number(params[:user_number])
   fp2.fijas_picas
+  @show= nil
   @fijas = fp2.fijas
   @picas = fp2.picas
   if fp2.fijas == 4
+    @winning_number = params[:user_number]
+    cookies.delete(:number)
     erb :winner
   else
     erb :index
